@@ -1,0 +1,7 @@
+.tile {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 4rem;
+  justify-content: center;
+}

@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Tile } from "./Tile";
 
 function App() {
+  const initialData = ["🀃", "🀆", "🀆", "🀇", "🀙", "🀃", "🀆", "🀆", "🀇", "🀙"];
+
+  let clickedItems = [];
+
+  function onClick(value) {
+    clickedItems.push(value);
+
+    if (clickedItems.length <= 2) {
+      console.log(compareItems(clickedItems[0], clickedItems[1]));
+    } else {
+      clickedItems.length = 0;
+    }
+  }
+
+  function compareItems(item1, item2) {
+    return item1 === item2;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ul className="App">
+      {initialData.map((item, idx) => (
+        <li key={idx}>
+          <Tile value={item} onClick={onClick}></Tile>
+        </li>
+      ))}
+    </ul>
   );
 }
 
