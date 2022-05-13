@@ -1,16 +1,40 @@
 import "./App.css";
 import { Tile } from "./Tile";
+import { useEffect, useState } from "react";
 
 function App() {
-  const initialData = ["🀃", "🀆", "🀆", "🀇", "🀙", "🀃", "🀆", "🀆", "🀇", "🀙"];
-
-  let clickedItems = [];
+  const [initialTiles, removeTile] = useState([
+    "🀃",
+    "🀆",
+    "🀆",
+    "🀇",
+    "🀙",
+    "🀃",
+    "🀆",
+    "🀆",
+    "🀇",
+    "🀙",
+  ]);
+  useEffect(() => {
+    if (!initialTiles.length) {
+      console.log("You won!");
+    }
+  });
+  const clickedItems = [];
 
   function onClick(value) {
-    clickedItems.push(value);
+    if (!clickedItems.some((item) => item.id === value.id)) {
+      clickedItems.push(value);
+    }
 
     if (clickedItems.length <= 2) {
-      console.log(compareItems(clickedItems[0], clickedItems[1]));
+      if (compareItems(clickedItems[0]?.value, clickedItems[1]?.value)) {
+        removeTile(
+          initialTiles.filter(
+            (_, idx) => ![clickedItems[0].id, clickedItems[1].id].includes(idx)
+          )
+        );
+      }
     } else {
       clickedItems.length = 0;
     }
@@ -22,9 +46,9 @@ function App() {
 
   return (
     <ul className="App">
-      {initialData.map((item, idx) => (
+      {initialTiles.map((item, idx) => (
         <li key={idx}>
-          <Tile value={item} onClick={onClick}></Tile>
+          <Tile value={item} id={idx} onClick={onClick}></Tile>
         </li>
       ))}
     </ul>
